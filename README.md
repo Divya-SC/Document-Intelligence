@@ -614,3 +614,147 @@ Real-World Problem
 Many organizations still receive documents through email, cloud storage, or shared folders. Teams spend considerable time identifying document types, renaming files, creating folders, checking for duplicates, and ensuring documents are stored consistently.
 
 Document Intelligence automates these repetitive tasks while preserving human oversight for exceptional cases. By combining AI-assisted classification with configurable business rules, it reduces manual effort, improves consistency, and creates a structured repository that supports onboarding, compliance, audits, and day-to-day operations.
+
+Engineering Challenges & Lessons Learned
+
+Building Document Intelligence involved more than integrating AI into a document workflow. The project required balancing automation, reliability, and operational accuracy while working within the constraints of Google Apps Script and external AI services.
+
+Challenge 1: AI Reliability
+
+Large language models can occasionally produce inconsistent or incomplete metadata. Relying solely on AI responses would result in misplaced documents and unreliable classifications.
+
+Solution
+
+Business rule validation after AI extraction
+Confidence scoring
+Manual review workflows
+Fallback processing for uncertain results
+
+Outcome
+
+AI provides recommendations, while business rules determine the final processing outcome.
+
+Challenge 2: Duplicate Documents
+
+Organizations often store multiple copies of the same document under different filenames.
+
+Examples:
+
+Board Resolution.pdf
+Board Resolution Final.pdf
+Board Resolution FINAL V2.pdf
+Resolution Signed.pdf
+
+Traditional filename comparisons cannot reliably detect these duplicates.
+
+Solution
+
+Every document is fingerprinted using a SHA-256 hash before processing.
+
+Outcome
+
+Reliable duplicate detection
+Reduced storage duplication
+Lower AI processing costs
+Cleaner document repository
+Challenge 3: Processing Large Document Libraries
+
+Google Apps Script has execution time limits, making it impractical to process thousands of documents in a single run.
+
+Solution
+
+Configurable batch processing
+Runtime protection
+Progress tracking
+Resume processing from the remaining queue
+
+Outcome
+
+Large migrations can be completed across multiple executions without restarting from the beginning.
+
+Challenge 4: AI Service Availability
+
+AI providers may experience quota limits, temporary outages, or API changes.
+
+Solution
+
+The platform separates the AI integration layer from the processing engine, allowing alternative providers to be used without redesigning the workflow.
+
+Outcome
+
+Greater resilience and flexibility as AI services evolve.
+
+Challenge 5: Standardization
+
+Documents received from different jurisdictions, banks, and service providers rarely follow consistent naming conventions or folder structures.
+
+Solution
+
+Standardized filenames
+Configurable folder mappings
+Business rule validation
+Consistent metadata model
+
+Outcome
+
+A structured repository that is easier to search, review, and maintain.
+
+Technical Stack
+Component	Technology
+Language	JavaScript (Google Apps Script)
+Platform	Google Workspace
+Storage	Google Drive
+Database	Google Sheets
+AI Providers	Google Gemini, OpenRouter
+Hashing	SHA-256
+Version Control	Git & GitHub
+Repository Goals
+
+This project is intended to demonstrate practical software engineering applied to business operations.
+
+The focus is on building solutions that:
+
+Automate repetitive document handling tasks
+Improve consistency and data quality
+Support compliance and operational processes
+Combine AI with deterministic business rules
+Remain maintainable through modular architecture
+
+The repository is actively maintained and evolves through incremental improvements, with each version introducing new capabilities while preserving a stable processing foundation.
+
+Contributing
+
+Contributions, suggestions, and discussions are welcome.
+
+If you identify an issue or have an idea for improving the platform:
+
+Open an issue describing the problem or enhancement.
+Discuss the proposed solution.
+Submit a pull request with clear documentation and testing notes.
+
+Please keep changes modular and aligned with the project's design principles.
+
+License
+
+This project is released under the MIT License. See the LICENSE file for details.
+
+A final suggestion
+
+One thing I would add that most GitHub repositories don't have is a Project Evolution timeline. It tells the story of how the idea developed, which is especially valuable in a portfolio repository.
+
+2026
+│
+├── Idea
+│   Manual document organization was consuming significant operational time.
+│
+├── Version 1
+│   AI classification and automated document organization.
+│
+├── Version 2
+│   Duplicate detection, processing engine, and review workflows.
+│
+├── Version 3
+│   Operational intelligence, expiry monitoring, and compliance dashboards.
+│
+└── Future
+    Enterprise document intelligence platform.
